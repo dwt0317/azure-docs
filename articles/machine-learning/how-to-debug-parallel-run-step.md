@@ -48,7 +48,7 @@ For a concise understanding of errors in your script there is:
 
 For more information on errors in your script, there is:
 
-- `~/logs/user/error/`: Contains errors thrown and full stack traces errors while loading and running entry script.
+- `~/logs/user/error/`: Contains full stack traces of exceptions thrown while loading and running entry script.
 
 When you need a full understanding of how each node executed the score script, look at the individual process logs for each node. The process logs can be found in the `sys/node` folder, grouped by worker nodes:
 
