@@ -10,7 +10,7 @@ ms.custom: troubleshooting
 ms.reviewer: jmartens, larryfr, vaidyas, laobri, tracych
 ms.author: bi
 author: bi
-ms.date: 09/15/2020
+ms.date: 10/15/2020
 ---
 
 # ParallelRunStep Performance Tuning Guide
@@ -26,7 +26,8 @@ The performance report is located in `logs/sys/perf/`. It consists of resource u
 ## Understanding ParallelRunStep Resource Requirements
 
 ### CPU and Memory
-The internal scripts of ParallelRunStep requires minor CPU and memory. In common, users only need to take care of CPU and memory usage of their own scripts.
+As the size of input data increases, the internal scripts of ParallelRunStep will consume more memory for data processing. 
+The internal scripts of ParallelRunStep have low CPU requirements. The overall CPU usage should mainly depend on scripts of users.
 
 ### Network
 ParallelRunStep requires a lot of network I/O operation to support dataset processing, mini-batch scheduling and processing. Bandwidth and latency are the primary concerns of network.
