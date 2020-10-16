@@ -36,7 +36,7 @@ ParallelRunStep requires a lot of network I/O operation to support dataset proce
 Logs of ParallelRunStep are stored in temporary location of local disk during the job which cost minor disk usage. Under specific circumstances where dataset is consumed in "download" mode, users have to ensure computes have enough disk space to handle mini-batch.
 
 
-## How to Choose Compute Target
+## How To Choose Compute Target
 
 For the concept of compute target, please refer to: 
 - [What are compute targets in Azure Machine Learning](https://docs.microsoft.com/azure/machine-learning/concept-compute-target)
@@ -45,9 +45,11 @@ For the sizes and options for Azure virtual machines, please refer to:
 - [Sizes for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/sizes)
 
 
-## Best Practices of Compute Target Choice
-TBC.
+## How To Set Mini-batch Size
 
 
-## FAQ on Performance Issues
-TBC.
+## How To Set Node Count
+
+
+## How to Set Process Count Per Node
+
