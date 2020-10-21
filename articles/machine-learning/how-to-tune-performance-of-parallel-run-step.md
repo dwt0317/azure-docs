@@ -26,14 +26,14 @@ The performance report is located in `logs/sys/perf/`. It consists of resource u
 ## Understanding ParallelRunStep Resource Requirements
 
 ### CPU and Memory
-As the size of input data increases, the internal scripts of ParallelRunStep will consume more memory for data processing. 
-The internal scripts of ParallelRunStep have low CPU requirements. The overall CPU usage should mainly depend on scripts of users.
+The internal scripts of ParallelRunStep requires minor CPU and memory. In common, users can focus on CPU and memory usage of their own scripts.
 
 ### Network
 ParallelRunStep requires a lot of network I/O operation to support dataset processing, mini-batch scheduling and processing. Bandwidth and latency are the primary concerns of network.
 
 ### Disk
-Logs of ParallelRunStep are stored in temporary location of local disk during the job which cost minor disk usage. Under specific circumstances where dataset is consumed in "download" mode, users have to ensure computes have enough disk space to handle mini-batch.
+Logs of ParallelRunStep are stored in temporary location of local disk which cost minor disk usage.
+Under specific circumstances where dataset is consumed in "download" mode, users have to ensure computes have enough disk space to handle mini-batch. For example, there is a job where the size of each mini-match is 500 MB and the process_count_per_node is 4. If this job is running on Windows compute, where ParallelRunStep will cache each mini-batch to local disk by default, the minimum disk space should be 2000 MB.
 
 
 ## How To Choose Compute Target
@@ -45,11 +45,18 @@ For the sizes and options for Azure virtual machines, please refer to:
 - [Sizes for virtual machines in Azure](https://docs.microsoft.com/azure/virtual-machines/sizes)
 
 
-## How To Set Mini-batch Size
+## How To Choose Mini-batch Size
+Mini-batch size is passed to a single run() call in entry script. To investigate the performance of mini-batch processing, a detailed log can be found in `logs/sys/job_report/processed_mini-batch.csv`. There are three metrics which are helpful:
+- Elapsed Seconds: The total duration of mini-batch processing.
+- Process Seconds: The CPU time of mini-batch processing. This metric indicates the busyness of CPU.
+- Run Method Seconds: The duration of run() in entry script.
 
 
-## How To Set Node Count
+## How To Choose Node Count
+Node count determines the number of compute nodes to be used for running the user script. It should not exceed the maximum number of nodes of compute target. 
+In general, more node counts can provide better parallelism and save more job running time. The number of mini-batches processed by each node can be found in `logs/sys/job_report/node_summary.csv`. If the report shows mini-batches allocation skews a lot among all nodes, a possible explanation is that the compute resource is more than sufficient for current job. User can consider reducing node count to save budget.
 
 
-## How to Set Process Count Per Node
+## How to Choose Process Count Per Node
+The best practice is to set it to the core number of GPU or CPU on one node. If too many processes are used, the synchronization overhead will increase and will not save overall runtime.
 
